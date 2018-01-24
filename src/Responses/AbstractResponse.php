@@ -9,16 +9,18 @@ class AbstractResponse
     use ConfigurationTrait;
 
     protected $input = '';
+    protected $client = null;
 
     /**
      * Construct
      *
      * @param $input
      */
-    public function __construct($configuration, $input = '')
+    public function __construct($configuration, $input = '', $client = null)
     {
         $this->setConfiguration($configuration);
         $this->setInput($input);
+        $this->setClient($client);
     }
 
     /**
@@ -38,6 +40,24 @@ class AbstractResponse
     public function getInput()
     {
         return $this->input;
+    }
+    /**
+     * seClient
+     *
+     * @param $client
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+        return $this;
+    }
+
+    /**
+     * getInput
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 
     /**

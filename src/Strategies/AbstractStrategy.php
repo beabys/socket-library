@@ -10,16 +10,11 @@ abstract class AbstractStrategy implements StrategyInterface
     use ConfigurationTrait;
 
     protected $data = null;
-    protected $configuration = null;
-
-    public function __construct($configuration)
-    {
-        $this->setConfiguration($configuration);
-    }
+    protected $client = null;
 
     public function setData($data)
     {
-        $this->data = $this->cleanInput($data);
+        $this->data = $this->sanitizeInput($data);
         return $this;
     }
 
@@ -28,13 +23,28 @@ abstract class AbstractStrategy implements StrategyInterface
         return $this->data;
     }
 
+    public function setClient($client)
+    {
+        $this->client = $client;
+        return $this;
+    }
+
+    public function getClient()
+    {
+        return $this->client;
+    }
+
     public function getObjectResponse()
     {
         $objectStrategy = null;
         $case = $this->typeResponse();
         switch (true) {
             default:
-                $objectStrategy = new Response($this->getConfiguration(), $this->getData());
+                $objectStrategy = new Response(
+                    $this->getConfiguration(), 
+                    $this->getData(),
+                    $this->getClient()
+                );
                 break;
         }
         return $objectStrategy;
@@ -45,7 +55,7 @@ abstract class AbstractStrategy implements StrategyInterface
         return;
     }
 
-    protected function cleanInput($input)
+    protected function sanitizeInput($input)
     {
         return preg_replace("[ \t\n\r]", '', $input);
     }
