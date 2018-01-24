@@ -1,0 +1,25 @@
+{
+    "name": "beabys/socket-library",
+    "type": "library",
+    "description": "simple implementation to integrate socket server",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alfonso Rodriguez",
+            "email": "beabys@gmail.com"
+        }
+    ],
+    "require": {
+        "morris/lessql": "^0.3.4",
+        "amphp/socket": "^0.10.5",
+        "rappasoft/laravel-helpers": "dev-master"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "^5.1"
+    },
+    "autoload": {
+      "psr-4": {
+        "SocketLibrary\\": "src/"
+      }
+    }
+}
