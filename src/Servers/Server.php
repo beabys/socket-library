@@ -79,7 +79,6 @@ class Server
                     try {
                         if (!empty($chunk)) {
                             $responseObject = $this->getResponseObject($chunk);
-                            var_dump($responseObject->getInput());
                             $response = $responseObject->proccessInput();
                             $responseObject = null;
                             yield $socket->write($response);
