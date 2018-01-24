@@ -30,7 +30,6 @@ abstract class AbstractStrategy implements StrategyInterface
 
     public function getObjectResponse()
     {
-        print_r($this->getData());
         $objectStrategy = null;
         $case = $this->typeResponse();
         switch (true) {
