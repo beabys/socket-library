@@ -18,7 +18,8 @@ class Server
     protected $host = 0;
     protected $port = 10880;
     protected $protocol = 'tcp';
-    protected $trategy = 'tcp';
+    protected $strategy = null;
+    protected $clients = [];
 
     public function __construct($configuration)
     {
@@ -91,6 +92,7 @@ class Server
             $protocol = $this->getProtocol();
             $uri = $protocol . '://' . $host . ':' . $port;
             $clientHandler = asyncCoroutine(function (ServerSocket $socket) use ($verbose) {
+                $this->clients[$socket->getRemoteAddress()] = $socket;
                 while (null !== $chunk = yield $socket->read()) {
                     try {
                         if (!empty($chunk)) {
@@ -106,6 +108,10 @@ class Server
                         //log exception
                     }
                 }
+                if ($verbose === 'v' || $verbose === 'vv') {
+                    echo sprintf("Client disconnected: %s." . PHP_EOL, $socket->getRemoteAddress());
+                }
+                unset($this->clients[$socket->getRemoteAddress()]);
             });
             $server = listenSocket($uri);
             while ($socket = yield $server->accept()) {

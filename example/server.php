@@ -15,4 +15,4 @@ $server = new Server($configuration);
 //set instance of strategy for the response
 $server->setStrategy(new Strategy);
 //start server ((optional) adding v or vv for verbose mode)
-$server->loop('v');
+$server->loop();
